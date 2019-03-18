@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>jquery实现放大镜效果</title>
+
+	<style>
+		#one{
+			width: 200px;
+			height: 200px;
+			border:1px solid black;
+			float: left;
+			/*margin-left: 50px;
+			margin-top: 100px;*/
+			position: absolute;
+			left: 100px;
+			top: 100px;
+		}
+		#two{
+			width: 200px;
+			height: 200px;
+			border:1px solid black;
+			float: left;
+			/*margin-left:100px;
+			margin-top: 100px;*/
+			position: absolute;
+			left: 400px;
+			top: 100px;
+			overflow: hidden;
+		}
+		#bg{
+			width: 40px;
+			height: 40px;
+			background: black;
+			opacity: 0.3;
+			position: absolute;
+			left: 0;
+			top: 0;
+
+		}
+		#move{
+			position: absolute;
+
+		}
+	</style>
+</head>
+<body>
+	<div id="one">
+		<div id="bg"></div>
+		<img width="100%" src="./2.jpg" alt="">
+	</div>
+	<div id="two">
+		<img id="move" src="./2.jpg" alt="">
+	</div>
+
+	<script src="jquery-3.2.1.js"></script>
+	<script>
+		// alert(nav==undefined);
+		alert(nav==undefined);
+		// var one=$('#one');
+		// // console.log(one);
+		// var two=$('#two');
+
+		// var bg=$('#bg');
+		// // 移动div的宽度
+		// var bgWidth=bg.width();
+		// // console.log(oneWidth);
+		// // 移动div的高度
+		// var bgHeight=bg.height();
+		$('#one').mousemove(function(e){
+
+			// 鼠标距离文档的宽度
+			var W=e.clientX;
+
+			var H=e.clientY;
+			// console.log(W);
+			// one偏离文档水平位置的距离
+			var oneW=$('#one').offset().left;
+
+			var oneH=$('#one').offset().top;
+			// console.log(oneW);
+			// 小div的宽度
+			var bgWidth=$('#bg').width();
+
+			var bgHeight=$('#bg').height();
+			// console.log(bgWidth);
+			
+			// 小div新的left
+			var newLeft=W-oneW-bgWidth/2;
+			// console.log(newLeft);
+			
+			// 小div新的top值
+			var newTop=H-oneH-bgHeight/2;
+
+			//newLeft最小值为0
+			if (newLeft<0) {
+				newLeft=0;
+			}
+			// newLeft最大值
+			var maxLeft=$('#one').width()-$('#bg').width();
+			if (newLeft>maxLeft) {
+				newLeft=maxLeft;
+			}
+
+			// newTop最小值
+			if (newTop<0) {
+				newTop=0;
+			}
+			// newTop的最大值
+			var maxTop=$('#one').height()-$('#bg').height();
+			if (newTop>maxTop) {
+				newTop=maxTop;
+			}
+			
+			$('#bg').css('top',newTop);
+			$('#bg').css('left',newLeft);
+
+			var twoW=$('#two').width();
+			var twoH=$('#two').height();
+
+			var oW=$('#one').width();
+			var oH=$('#one').height();
+
+			// 大图move的moveLeft
+			var moveLeft=newLeft*twoW/bgWidth;
+			// console.log(moveLeft);
+			// 大图move的moveTop
+			var moveTop=newTop*twoH/bgHeight;
+			
+			$('#move').css('left',-moveLeft);
+			$('#move').css('top',-moveTop);
+		});
+		
+	</script>
+</body>
+</html>
